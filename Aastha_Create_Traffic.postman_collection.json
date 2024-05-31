@@ -1,0 +1,127 @@
+{
+	"info": {
+		"_postman_id": "8e3da0c8-fbd8-4ca6-8923-d14df8189b6f",
+		"name": "Aastha_Create_Traffic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "582543"
+	},
+	"item": [
+		{
+			"name": "Create_Network",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"node\": \"http://127.0.0.1:8888\",\n    \"type\": \"vlan\",\n    \"iface\": \"ens192\",\n    \"vlanId\": 128\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{server}}/api/nodes/vlan/create",
+					"protocol": "http",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"api",
+						"nodes",
+						"vlan",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create_Test",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"loaders\": [\n        {\n            \"id\": \"vhDric-8h\",\n            \"node\": \"http://127.0.0.1:8888\",\n            \"iface\": \"ens192.127\",\n            \"network\": {\n                \"trexHardwareMode\": false,\n                \"ipPool\": [\n                    {\n                        \"id\": \"zxfWvnsc41\",\n                        \"firstIp\": \"10.0.0.10\",\n                        \"lastIp\": \"10.254.254.254\",\n                        \"prefixLen\": 8,\n                        \"gateway\": \"\"\n                    }\n                ],\n                \"ipPoolv6\": [\n                    {\n                        \"id\": \"jQS_e5LYqi\",\n                        \"firstIp\": \"2001:db8:0:0:0:0:0:10\",\n                        \"lastIp\": \"2001:db8:0:0:0:0:0:ffff\",\n                        \"prefixLen\": 112,\n                        \"gateway\": \"\"\n                    }\n                ],\n                \"trexNetwork\": {\n                    \"promiscuous\": true,\n                    \"link\": true,\n                    \"multicast\": false,\n                    \"service\": false,\n                    \"flow_control\": 0\n                }\n            },\n            \"configs\": [\n                {\n                    \"loops\": null,\n                    \"scale\": 1000,\n                    \"scale_start\": 50,\n                    \"scale_ramp\": 50,\n                    \"run_time\": 60,\n                    \"timeout\": 60000,\n                    \"dscp\": 0,\n                    \"id\": \"client_8QxO6Jqil\",\n                    \"name\": \"HTTP scenario\",\n                    \"isIPv6\": false,\n                    \"isSSL\": false,\n                    \"checkSSL\": false,\n                    \"reuseConnection\": true,\n                    \"tcp_connection_timeout\": 20,\n                    \"protocol\": \"HTTP\",\n                    \"type\": \"scenario\",\n                    \"wire\": {\n                        \"targetId\": \"server_W6RCxasJY\"\n                    },\n                    \"extraSsl\": {\n                        \"enableSessionCache\": true,\n                        \"enableSessionTickets\": false\n                    },\n                    \"routes\": [\n                        {\n                            \"delay\": 1000,\n                            \"headers\": [],\n                            \"url\": \"/\",\n                            \"type\": \"GET\",\n                            \"payload\": {\n                                \"size\": 256000\n                            }\n                        }\n                    ],\n                    \"subnetWire\": {\n                        \"ipPoolId\": \"zxfWvnsc41\",\n                        \"staticIpWire\": {\n                            \"targetId\": \"nw876uwXqS\"\n                        }\n                    }\n                }\n            ]\n        }\n    ],\n    \"receivers\": [\n        {\n            \"id\": \"ROpnzS-zH\",\n            \"node\": \"http://127.0.0.1:8888\",\n            \"iface\": \"ens224.127\",\n            \"network\": {\n                \"trexHardwareMode\": false,\n                \"IPv4\": {\n                    \"id\": \"nw876uwXqS\",\n                    \"staticIp\": \"10.0.0.1\",\n                    \"gateway\": \"\",\n                    \"prefixLen\": 8\n                },\n                \"IPv6\": {\n                    \"id\": \"RVRowce6kB\",\n                    \"staticIp\": \"2001:db8:0:0:0:0:0:1\",\n                    \"gateway\": \"\",\n                    \"prefixLen\": 112\n                },\n                \"trexNetwork\": {\n                    \"promiscuous\": true,\n                    \"link\": true,\n                    \"multicast\": false,\n                    \"service\": false,\n                    \"flow_control\": 0\n                }\n            },\n            \"configs\": [\n                {\n                    \"id\": \"server_W6RCxasJY\",\n                    \"sslMode\": \"SELF_SIGNED\",\n                    \"dscp\": 0,\n                    \"type\": \"scenario\",\n                    \"extraSsl\": {\n                        \"sessionIdCacheSizeBytes\": 10485760,\n                        \"enableSessionTickets\": true\n                    },\n                    \"name\": \"HTTP server\",\n                    \"protocol\": \"HTTP\",\n                    \"sslPort\": 8443,\n                    \"port\": 8080,\n                    \"routes\": [\n                        {\n                            \"url\": \"/\",\n                            \"headers\": [],\n                            \"type\": \"Random\",\n                            \"options\": {\n                                \"size\": 256000,\n                                \"scheme\": \"static\",\n                                \"count\": 10,\n                                \"dataType\": \"string\"\n                            }\n                        }\n                    ]\n                }\n            ]\n        }\n    ],\n    \"options\": {\n        \"tcpdump\": {\n            \"enable\": false,\n            \"count\": 100,\n            \"timeout\": 10000\n        },\n        \"tc\": {\n            \"enable\": false\n        },\n        \"traceroute\": {\n            \"enable\": true\n        }\n    },\n    \"user\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{server}}/api/test/",
+					"protocol": "http",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"api",
+						"test",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Start_Test",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"control\": {\n        \"action\": \"start\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{server}}/api/test/27",
+					"protocol": "http",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"api",
+						"test",
+						"27"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete_Test",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"control\": {\n        \"action\": \"start\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{server}}/api/test/52",
+					"protocol": "http",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"api",
+						"test",
+						"52"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
