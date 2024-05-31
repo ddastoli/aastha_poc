@@ -1,0 +1,192 @@
+---
+apic:
+  tenants:
+    - name: AASTHA
+
+      vrfs:
+        - name: VRF1
+        - name: VRF2
+        - name: VRF3
+        - name: VRF4        
+        
+      bridge_domains:
+        - name: 10.0.0.0_24
+          vrf: VRF1
+          subnets: 
+          - ip: 10.0.0.1/24     
+        - name: 10.0.1.0_24
+          vrf: VRF1
+          subnets: 
+          - ip: 10.0.1.1/24 
+
+        - name: 10.0.2.0_24
+          vrf: VRF2
+          subnets: 
+          - ip: 10.0.2.1/24     
+        - name: 10.0.3.0_24
+          vrf: VRF2
+          subnets: 
+          - ip: 10.0.3.1/24     
+
+        - name: 10.0.4.0_24
+          vrf: VRF3
+          subnets: 
+          - ip: 10.0.4.1/24     
+        - name: 10.0.5.0_24
+          vrf: VRF3
+          subnets: 
+          - ip: 10.0.5.1/24     
+
+        - name: 10.0.6.0_24
+          vrf: VRF4
+          subnets: 
+          - ip: 10.0.6.1/24     
+        - name: 10.0.7.0_24
+          vrf: VRF4
+          subnets: 
+          - ip: 10.0.7.1/24 
+
+      filters:
+        - name: FILTER1
+          entries:
+            - name: HTTP
+              ethertype: ip
+              protocol: tcp
+              destination_from_port: 23
+              destination_to_port: 8080
+              stateful: true
+
+      contracts:
+        - name: CON1
+          scope: tenant
+          subjects:
+            - name: SUB1
+              filters:
+                - filter: FILTER1
+                  action: permit
+
+      application_profiles:
+        - name: APP1
+          endpoint_groups:
+            - name: FrontEnd1
+              bridge_domain: 10.0.0.0_24
+              physical_domains:
+                - PhysDom
+              static_ports:
+                - node_id: 2101
+                  port: 20
+                  vlan: 130
+              contracts:
+                consumers:
+                  - CON1
+                providers:
+                  - CON1                              
+
+            - name: BackEnd1
+              bridge_domain: 10.0.1.0_24
+              physical_domains:
+                - PhysDom
+              static_ports:
+                - node_id: 2102
+                  port: 20
+                  vlan: 130
+              contracts:
+                consumers:
+                  - CON1
+                providers:
+                  - CON1                              
+
+
+        - name: APP2
+          endpoint_groups:
+            - name: FrontEnd2
+              bridge_domain: 10.0.2.0_24
+              physical_domains:
+                - PhysDom
+              static_ports:
+                - node_id: 2101
+                  port: 20
+                  vlan: 131
+              contracts:
+                consumers:
+                  - CON1
+                providers:
+                  - CON1                              
+
+            - name: BackEnd2
+              bridge_domain: 10.0.3.0_24
+              physical_domains:
+                - PhysDom
+              static_ports:
+                - node_id: 2102
+                  port: 20
+                  vlan: 131
+              contracts:
+                consumers:
+                  - CON1
+                providers:
+                  - CON1 
+
+
+        - name: APP3
+          endpoint_groups:
+            - name: FrontEnd3
+              bridge_domain: 10.0.4.0_24
+              physical_domains:
+                - PhysDom
+              static_ports:
+                - node_id: 2101
+                  port: 20
+                  vlan: 132
+              contracts:
+                consumers:
+                  - CON1
+                providers:
+                  - CON1                              
+
+            - name: BackEnd3
+              bridge_domain: 10.0.5.0_24
+              physical_domains:
+                - PhysDom
+              static_ports:
+                - node_id: 2102
+                  port: 20
+                  vlan: 132
+              contracts:
+                consumers:
+                  - CON1
+                providers:
+                  - CON1                   
+
+
+        - name: APP4
+          endpoint_groups:
+            - name: FrontEnd4
+              bridge_domain: 10.0.6.0_24
+              physical_domains:
+                - PhysDom
+              static_ports:
+                - node_id: 2101
+                  port: 20
+                  vlan: 133
+              contracts:
+                consumers:
+                  - CON1
+                providers:
+                  - CON1                              
+
+            - name: BackEnd4
+              bridge_domain: 10.0.7.0_24
+              physical_domains:
+                - PhysDom
+              static_ports:
+                - node_id: 2102
+                  port: 20
+                  vlan: 133
+              contracts:
+                consumers:
+                  - CON1
+                providers:
+                  - CON1 
+
+                  
